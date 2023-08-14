@@ -26,6 +26,7 @@ public class ComissaoTest {
 
     @Test
     public void deve_calcular_100_reais_de_comissao_para_venda_de_1000_com_10_por_cento() {
+
         // Arrange (Preparação)
         Double valorVenda = 1000.0;
         Double valorComissao = 100.0;
@@ -39,6 +40,7 @@ public class ComissaoTest {
 
     @Test
     public void deve_calcular_300_reais_de_comissao_para_venda_de_2000_com_15_por_cento() {
+
         // Arrange (Preparação)
         Double valorVenda = 2000.0;
         Double valorComissao = 300.0;
