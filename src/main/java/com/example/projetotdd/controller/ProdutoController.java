@@ -1,9 +1,9 @@
 package com.example.projetotdd.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.projetotdd.model.Produto;
+import com.example.projetotdd.service.ProdutoService;
 
 @RestController
 @RequestMapping("/api/produtos")
 public class ProdutoController {
 
-    @GetMapping
-    public ResponseEntity<List<Produto>> obterTodos() {
+    @Autowired
+    private ProdutoService produtoService;
 
-        List<Produto> produtos = new ArrayList<Produto>();
+    @GetMapping
+    public ResponseEntity<List<Produto>> obterTodos() throws Exception {
+
+        List<Produto> produtos = produtoService.obterTodos();
 
         return new ResponseEntity<>(produtos, HttpStatus.OK);
     }
@@ -30,7 +34,7 @@ public class ProdutoController {
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Produto>> obterPorId(@PathVariable Long id) {
 
-        Optional<Produto> produto = Optional.of(new Produto());
+        Optional<Produto> produto = produtoService.obterPorId(id);
 
         return new ResponseEntity<>(produto, HttpStatus.OK);
     }
@@ -38,6 +42,8 @@ public class ProdutoController {
     @PostMapping()
     public ResponseEntity<Produto> adicionar(@RequestBody Produto produto) {
 
-        return new ResponseEntity<>(produto, HttpStatus.OK);
+        Produto adicionado = produtoService.adicionar(produto);
+
+        return new ResponseEntity<>(adicionado, HttpStatus.CREATED);
     }
 }
